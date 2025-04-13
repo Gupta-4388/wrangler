@@ -16,6 +16,18 @@
 
 grammar Directives;
 
+BYTE_SIZE: NUMBER BYTE_UNIT; 
+TIME_DURATION: NUMBER TIME_UNIT; 
+fragment BYTE_UNIT: [kKmMgGtTpP]?[bB] | [kK][iI][bB] | [mM][iI][bB] | [gG][iI][bB] | [tT][iI][bB] | 
+[pP][iI][bB]; 
+fragment TIME_UNIT: [nN][sS] | [uU][sS] | [mM][sS] | [sS] | [mM] | [hH] | [dD]; 
+fragment NUMBER: [0-9]+ ('.' [0-9]+)?; 
+// Parser rules 
+value: STRING | NUMBER | BOOLEAN | BYTE_SIZE | TIME_DURATION | COLUMN_NAME | ... ; 
+byteSizeArg: BYTE_SIZE; 
+timeDurationArg: TIME_DURATION; 
+directiveArgument: value | byteSizeArg | timeDurationArg | ... ; 
+
 options {
   language = Java;
 }
